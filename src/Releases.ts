@@ -1,6 +1,7 @@
 import {GitHub} from '@actions/github/lib/utils'
 import {OctokitResponse} from "@octokit/types";
 import {RestEndpointMethodTypes} from "@octokit/plugin-rest-endpoint-methods";
+import * as core from '@actions/core';
 import {Inputs} from "./Inputs";
 import path from 'path';
 var mime = require('mime-types');
@@ -170,6 +171,7 @@ export class GithubReleases implements Releases {
     ): Promise<UploadArtifactResponse> {
         if(contentType==="raw") {
             contentType = mime.lookup(name) || "raw"
+            core.debug(`Guessed content type for ${name} as ${contentType}`)
         }
         return this.git.rest.repos.uploadReleaseAsset({
             url: assetUrl,
