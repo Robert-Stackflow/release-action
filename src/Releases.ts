@@ -169,10 +169,8 @@ export class GithubReleases implements Releases {
         name: string,
         releaseId: number,
     ): Promise<UploadArtifactResponse> {
-        if(contentType==="raw") {
-            contentType = mime.lookup(name) || "raw"
-            core.debug(`Guessed content type for ${name} as ${contentType}`)
-        }
+        contentType = mime.lookup(name) || "raw"
+        core.debug(`Guessed content type for ${name} as ${contentType}`)
         return this.git.rest.repos.uploadReleaseAsset({
             url: assetUrl,
             headers: {
